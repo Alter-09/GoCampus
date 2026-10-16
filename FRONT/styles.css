@@ -270,7 +270,9 @@ body.use-real-img .bg-plan-img {
 
 /* MENÚ CONTEXTUAL AL DAR CLIC */
 .context-menu {
-  width: 340px;
+  width: 380px;
+  max-height: calc(100vh - 2.5rem);
+  overflow-y: auto;
   background: var(--panel-bg);
   border: 1px solid var(--border-color);
   border-radius: 12px;
@@ -282,6 +284,303 @@ body.use-real-img .bg-plan-img {
   align-self: flex-start;
   position: sticky;
   top: 1.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cl-azul) var(--cl-azul-petroleo);
+}
+
+.context-menu::-webkit-scrollbar {
+  width: 6px;
+}
+.context-menu::-webkit-scrollbar-track {
+  background: var(--cl-azul-petroleo);
+  border-radius: 4px;
+}
+.context-menu::-webkit-scrollbar-thumb {
+  background: var(--cl-azul);
+  border-radius: 4px;
+}
+
+/* SECCIONES DENTRO DE LA CARD */
+.card-section {
+  border-top: 1px solid var(--border-color);
+  padding-top: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.card-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-ical-export {
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid var(--cl-celeste);
+  color: var(--cl-celeste);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-ical-export:hover {
+  background: var(--cl-celeste);
+  color: #0b1120;
+}
+
+/* WIDGET ICALENDAR EN TIEMPO REAL */
+.ical-widget {
+  background: #080d1a;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.65rem;
+}
+
+.ical-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.45rem;
+}
+
+.ical-month-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  text-transform: capitalize;
+}
+
+.ical-nav-btn {
+  background: var(--cl-azul-petroleo);
+  border: 1px solid var(--border-color);
+  color: #94a3b8;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  transition: all 0.15s ease;
+}
+
+.ical-nav-btn:hover {
+  background: var(--cl-azul);
+  color: #fff;
+  border-color: var(--cl-celeste);
+}
+
+.ical-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.ical-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.ical-day {
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.74rem;
+  border-radius: 4px;
+  cursor: pointer;
+  background: rgba(30, 41, 59, 0.35);
+  color: #cbd5e1;
+  position: relative;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+}
+
+.ical-day.empty {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ical-day:hover {
+  background: var(--cl-azul);
+  color: #fff;
+}
+
+.ical-day.today {
+  border-color: var(--cl-celeste);
+  font-weight: 700;
+}
+
+.ical-day.selected {
+  background: var(--cl-azul-claro);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 0 8px rgba(44, 170, 255, 0.4);
+}
+
+.ical-day.occupied {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border-bottom: 2px solid #ef4444;
+}
+
+.ical-day.occupied::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ef4444;
+}
+
+.ical-selected-info {
+  background: var(--cl-azul-petroleo);
+  padding: 0.55rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.76rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.ical-info-header strong {
+  color: var(--cl-celeste);
+  font-size: 0.78rem;
+}
+
+.slot-occupied {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.14);
+  padding: 3px 6px;
+  border-radius: 4px;
+  display: block;
+  font-size: 0.74rem;
+  border-left: 2px solid #ef4444;
+}
+
+.slot-free {
+  color: #86efac;
+  background: rgba(16, 185, 129, 0.12);
+  padding: 3px 6px;
+  border-radius: 4px;
+  display: block;
+  font-size: 0.74rem;
+}
+
+/* FORMULARIO DE RESERVA DIRECTA */
+.card-reserva-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.form-group-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.form-group label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.form-control {
+  background: #080d1a;
+  border: 1px solid var(--border-color);
+  color: #f8fafc;
+  padding: 0.42rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-family: inherit;
+  width: 100%;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--cl-celeste);
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25);
+}
+
+.btn-confirm-reserva {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  border: 1px solid var(--cl-celeste);
+  padding: 0.6rem 0.85rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: all 0.2s ease;
+  margin-top: 0.25rem;
+}
+
+.btn-confirm-reserva:hover {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
+}
+
+/* SECCIÓN TRIAJE INTELIGENTE IA (GROK) */
+.ai-badge-pill {
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid var(--cl-celeste);
+  color: var(--cl-celeste);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+}
+
+.card-triage-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.card-triage-form textarea.form-control {
+  resize: vertical;
+  min-height: 48px;
+}
+
+.btn-triage-ai {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: var(--cl-celeste);
+  border: 1px solid var(--cl-celeste);
+  padding: 0.55rem 0.85rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: all 0.2s ease;
+}
+
+.btn-triage-ai:hover {
+  background: rgba(56, 189, 248, 0.18);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
 }
 
 .context-menu.hidden {

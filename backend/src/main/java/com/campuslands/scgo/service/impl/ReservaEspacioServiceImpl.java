@@ -36,6 +36,29 @@ public class ReservaEspacioServiceImpl implements ReservaEspacioService {
     @Override
     @Transactional
     public ReservaResponseDTO crearReserva(ReservaRequestDTO dto) {
+        // 0. Normalizar fecha de reserva y horas si fueron enviadas en campos separados
+        if (dto.getFechaInicio() == null) {
+            LocalDate fecha = dto.getFechaReserva();
+            LocalTime hora = dto.getHoraInicio() != null ? dto.getHoraInicio() : dto.getHoraReserva();
+            if (fecha != null && hora != null) {
+                dto.setFechaInicio(LocalDateTime.of(fecha, hora));
+            } else {
+                throw new BusinessException(ErrorCode.INVALID_INPUT_DATA,
+                        "Debe especificar la fecha de reserva y la hora de inicio");
+            }
+        }
+
+        if (dto.getFechaFin() == null) {
+            LocalDate fecha = dto.getFechaReserva() != null ? dto.getFechaReserva() : dto.getFechaInicio().toLocalDate();
+            LocalTime fin = dto.getHoraFin();
+            if (fin != null) {
+                dto.setFechaFin(LocalDateTime.of(fecha, fin));
+            } else {
+                // Por defecto 1 hora si no se especifica hora de fin
+                dto.setFechaFin(dto.getFechaInicio().plusHours(1));
+            }
+        }
+
         // 1. Validar usuario solicitante
         Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con id: " + dto.getUsuarioId()));
@@ -137,7 +160,6 @@ public class ReservaEspacioServiceImpl implements ReservaEspacioService {
                 .orElseThrow(() -> new ResourceNotFoundException("Reserva no encontrada con id: " + id));
 
         if (usuarioId != null && !reserva.getUsuario().getId().equals(usuarioId)) {
-            // Permitir si es admin, pero si viene especificado el usuario validar pertenencia
             Usuario user = usuarioRepository.findById(usuarioId)
                     .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con id: " + usuarioId));
             if (!"administrador".equalsIgnoreCase(user.getRol())) {
@@ -159,8 +181,25 @@ public class ReservaEspacioServiceImpl implements ReservaEspacioService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<ReservaResponseDTO> listarTodas() {
+        return reservaEspacioRepository.findAll().stream()
+                .filter(r -> "activa".equalsIgnoreCase(r.getEstado()) || "en_curso".equalsIgnoreCase(r.getEstado()))
+                .map(this::toDTO)
+                .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<ReservaResponseDTO> listarPorUsuario(Long usuarioId) {
         return reservaEspacioRepository.findByUsuarioId(usuarioId).stream()
+                .map(this::toDTO)
+                .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ReservaResponseDTO> listarPorEspacio(Long espacioId) {
+        return reservaEspacioRepository.findByEspacioIdAndEstado(espacioId, "activa").stream()
                 .map(this::toDTO)
                 .toList();
     }
@@ -202,7 +241,6 @@ public class ReservaEspacioServiceImpl implements ReservaEspacioService {
         List<Espacio> espacios = espacioRepository.findAll();
 
         return espacios.stream().map(espacio -> {
-            // Verificar si hay una reserva activa en ese instante exacto
             List<ReservaEspacio> reservasEnMomento = reservaEspacioRepository.findByEspacioIdAndRango(
                     espacio.getId(),
                     momento.minusSeconds(1),
@@ -242,6 +280,10 @@ public class ReservaEspacioServiceImpl implements ReservaEspacioService {
                 .usuarioEmail(r.getUsuario().getEmail())
                 .fechaInicio(r.getFechaInicio())
                 .fechaFin(r.getFechaFin())
+                .fechaReserva(r.getFechaInicio().toLocalDate())
+                .horaInicio(r.getFechaInicio().toLocalTime())
+                .horaFin(r.getFechaFin().toLocalTime())
+                .horaReserva(r.getFechaInicio().toLocalTime())
                 .cantidadPersonas(r.getCantidadPersonas())
                 .estado(r.getEstado())
                 .motivo(r.getMotivo())

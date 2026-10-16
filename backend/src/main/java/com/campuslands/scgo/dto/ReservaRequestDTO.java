@@ -8,7 +8,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @Builder
@@ -22,13 +24,24 @@ public class ReservaRequestDTO {
     @NotNull(message = "El id del usuario es obligatorio")
     private Long usuarioId;
 
-    @NotNull(message = "La fecha y hora de inicio es obligatoria")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime fechaInicio;
 
-    @NotNull(message = "La fecha y hora de fin es obligatoria")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime fechaFin;
+
+    // Campos de fecha de reserva y hora de reserva requeridos por el frontend
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fechaReserva;
+
+    @JsonFormat(pattern = "HH:mm[:ss]")
+    private LocalTime horaInicio;
+
+    @JsonFormat(pattern = "HH:mm[:ss]")
+    private LocalTime horaFin;
+
+    @JsonFormat(pattern = "HH:mm[:ss]")
+    private LocalTime horaReserva;
 
     @NotNull(message = "La cantidad de personas es obligatoria")
     @Min(value = 1, message = "Debe haber al menos 1 persona en la reserva")

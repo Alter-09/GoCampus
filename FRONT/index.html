@@ -38,14 +38,14 @@
     <!-- Botones para alternar entre los 2 módulos + CTA Recorrido 3D -->
     <nav class="module-nav" aria-label="Selector de Módulos y Vista 3D">
       <button id="btn-mod-canaveral" class="module-btn active" data-module="canaveral">
-        🚀 Módulo 1: Sector Cabo Cañaveral
+        Módulo 1: Sector Cabo Cañaveral
       </button>
       <button id="btn-mod-iss" class="module-btn" data-module="iss">
-        🛰️ Módulo 2: Estación Espacial Internacional
+        Módulo 2: Estación Espacial Internacional
       </button>
       <!-- BOTÓN CTA: RECORRIDO 3D -->
       <button id="btn-start-3d" class="cta-3d-btn" type="button" aria-haspopup="dialog" aria-controls="doom-3d-modal" aria-label="Iniciar Recorrido 3D interactivo del módulo activo con Orbit">
-        <span class="cta-3d-icon" aria-hidden="true">🕹️</span>
+        <span class="cta-3d-icon" aria-hidden="true"></span>
         <span>Recorrido 3D</span>
         <span class="cta-orbit-tag">ORBIT DOOM</span>
       </button>
@@ -68,7 +68,7 @@
          ========================================== -->
     <section id="module-canaveral" class="map-module active">
       <div class="module-header">
-        <h2>🚀 Sector Cabo Cañaveral</h2>
+        <h2>Sector Cabo Cañaveral</h2>
         <p>Haz clic en cualquiera de los <strong>9 puntos rojos</strong> del plano (incluyendo la <strong>Sala de Reunión</strong> y las <strong>Salas Destacadas</strong>) para abrir el menú del área.</p>
       </div>
 
@@ -106,7 +106,7 @@
           <!-- Domo Semicircular Superior Derecho -->
           <path d="M 745 305 A 210 210 0 0 1 1165 305 Z" fill="#cfd5d9" stroke="#3c4245" stroke-width="5"/>
           <line x1="955" y1="95" x2="955" y2="305" stroke="#3c4245" stroke-width="4"/>
-          <text x="850" y="165" font-size="12" fill="#444" text-anchor="middle">ZONA LOUNGE / DOMO</text>
+          <text x="858" y="158" font-size="11" font-weight="bold" fill="#3c4245" text-anchor="middle" letter-spacing="1">AUDITORIO</text>
           <text x="1045" y="210" font-size="12" fill="#444" text-anchor="middle">TERRAZA DER.</text>
 
           <!-- Cuerpo Central y Derecho (Coworking + Hunters) -->
@@ -184,7 +184,7 @@
          ========================================== -->
     <section id="module-iss" class="map-module">
       <div class="module-header">
-        <h2>🛰️ Estación Espacial Internacional — Plano de Evacuación Campuslands</h2>
+        <h2>Estación Espacial Internacional — Plano de Evacuación Campuslands</h2>
         <p>Haz clic en cualquiera de los <strong>4 puntos rojos</strong> de los salones para desplegar su menú.</p>
       </div>
 
@@ -210,23 +210,23 @@
           <!-- Contorno General Izquierdo (4 Salones) -->
           <rect x="20" y="105" width="715" height="385" fill="#ceccc8" stroke="#4a4845" stroke-width="6"/>
 
-          <!-- División salón superior izquierdo (Salón 3) -->
+          <!-- División salón superior izquierdo (APOLLO - S3) -->
           <path d="M 20 105 L 355 105 L 355 235 L 300 298 L 20 298 Z" fill="#d5d3cf" stroke="#4a4845" stroke-width="4"/>
-          <text x="180" y="290" font-size="11" fill="#555" text-anchor="middle">Salón 3 CAMPUS</text>
+          <text x="180" y="290" font-size="12" font-weight="bold" fill="#333" text-anchor="middle">APOLLO (S3)</text>
 
-          <!-- División salón superior derecho (Salón 2) -->
+          <!-- División salón superior derecho (SPUTNIK - S2) -->
           <path d="M 355 105 L 675 105 L 675 245 L 625 298 L 395 298 L 355 235 Z" fill="#d5d3cf" stroke="#4a4845" stroke-width="4"/>
-          <text x="510" y="122" font-size="11" fill="#555" text-anchor="middle">Salón 2 CAMPUS</text>
+          <text x="510" y="122" font-size="12" font-weight="bold" fill="#333" text-anchor="middle">SPUTNIK (S2)</text>
 
-          <!-- División salón inferior izquierdo (Salón 4) -->
+          <!-- División salón inferior izquierdo (ARTEMIS - S4) -->
           <path d="M 20 298 L 300 298 L 348 365 L 348 490 L 20 490 Z" fill="#d5d3cf" stroke="#4a4845" stroke-width="4"/>
-          <text x="180" y="314" font-size="11" fill="#555" text-anchor="middle">Salón 4 CAMPUS</text>
+          <text x="180" y="314" font-size="12" font-weight="bold" fill="#333" text-anchor="middle">ARTEMIS (S4)</text>
 
-          <!-- División salón inferior derecho (Salón 1) -->
+          <!-- División salón inferior derecho (SKY LAB - S1) -->
           <rect x="430" y="365" width="305" height="125" fill="#d5d3cf" stroke="#4a4845" stroke-width="4"/>
           <line x1="430" y1="365" x2="732" y2="365" stroke="#000" stroke-width="6"/>
           <line x1="430" y1="363" x2="430" y2="385" stroke="#8b0000" stroke-width="5"/>
-          <text x="560" y="482" font-size="11" fill="#555" text-anchor="middle">Salón 1 CAMPUS</text>
+          <text x="560" y="482" font-size="12" font-weight="bold" fill="#333" text-anchor="middle">SKY LAB (S1)</text>
 
           <!-- Bloque Derecho (Ascensores, Escaleras y Baños) -->
           <rect x="735" y="105" width="585" height="385" fill="#ceccc8" stroke="#4a4845" stroke-width="5"/>
@@ -287,11 +287,108 @@
 
       <div class="menu-meta">
         <div><strong>Código:</strong> <span id="menu-code">-</span></div>
-        <div><strong>Capacidad:</strong> <span id="menu-capacity">-</span></div>
-        <div><strong>Estado:</strong> <span id="menu-status" class="status-pill">Disponible</span></div>
+        <div><strong>Aforo Oficial:</strong> <span id="menu-capacity">-</span></div>
+        <div><strong>Estado en Vivo:</strong> <span id="menu-status" class="status-pill">Disponible</span></div>
+        <div><strong>Tipo de Espacio:</strong> <span id="menu-type">Aula Oficial</span></div>
+        <div><strong>Franja Operativa:</strong> <span id="menu-schedule">06:00 AM - 11:00 PM</span></div>
+        <div><strong>Duración Máxima:</strong> <span id="menu-max-dur">3 horas continuas</span></div>
       </div>
 
-      <h4>Acciones del Menú</h4>
+      <!-- SECCIÓN ICALENDAR & DISPONIBILIDAD EN TIEMPO REAL -->
+      <section class="card-section ical-section">
+        <div class="card-section-header">
+          <h4>iCalendar // Ocupación de la Sala</h4>
+          <button id="btn-export-ical" class="btn-ical-export" type="button" title="Descargar archivo iCalendar .ics para sincronizar">
+            Exportar .ics
+          </button>
+        </div>
+
+        <div id="ical-widget" class="ical-widget">
+          <div class="ical-nav">
+            <button id="btn-ical-prev" class="ical-nav-btn" type="button" aria-label="Mes anterior">&lt;</button>
+            <span id="ical-current-month" class="ical-month-title">Octubre 2026</span>
+            <button id="btn-ical-next" class="ical-nav-btn" type="button" aria-label="Mes siguiente">&gt;</button>
+          </div>
+          <div class="ical-weekdays">
+            <span>Lu</span><span>Ma</span><span>Mi</span><span>Ju</span><span>Vi</span><span>Sá</span><span>Do</span>
+          </div>
+          <div id="ical-days-grid" class="ical-grid">
+            <!-- Días inyectados dinámicamente -->
+          </div>
+        </div>
+
+        <div id="ical-selected-info" class="ical-selected-info">
+          <div class="ical-info-header">
+            <strong id="ical-info-date">Fecha: Seleccione un día</strong>
+          </div>
+          <div id="ical-info-slots" class="ical-info-slots">
+            <span class="slot-free">Espacio 100% libre para reserva en horario de 06:00 a 23:00</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN FORMULARIO DE RESERVA -->
+      <section class="card-section reservation-section">
+        <h4>Crear Reserva</h4>
+        <form id="form-crear-reserva" class="card-reserva-form" onsubmit="return false;">
+          <div class="form-group-row">
+            <div class="form-group">
+              <label for="reserva-fecha">Fecha de Reserva:</label>
+              <input type="date" id="reserva-fecha" required class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="reserva-personas">Personas (Aforo):</label>
+              <input type="number" id="reserva-personas" min="1" max="100" value="6" required class="form-control" />
+            </div>
+          </div>
+
+          <div class="form-group-row">
+            <div class="form-group">
+              <label for="reserva-hora-inicio">Hora de Reserva (Inicio):</label>
+              <input type="time" id="reserva-hora-inicio" min="06:00" max="22:45" step="900" value="14:00" required class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="reserva-hora-fin">Hora de Fin (Máx 3h):</label>
+              <input type="time" id="reserva-hora-fin" min="06:15" max="23:00" step="900" value="15:30" required class="form-control" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="reserva-usuario">Usuario Solicitante (Cargado en Vivo):</label>
+            <select id="reserva-usuario" class="form-control">
+              <option value="">Cargando usuarios desde el backend...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="reserva-motivo">Motivo / Asunto de la Reserva:</label>
+            <input type="text" id="reserva-motivo" placeholder="p. ej. Sesión de Desarrollo Web" required class="form-control" />
+          </div>
+
+          <button id="btn-submit-reserva" type="submit" class="btn-confirm-reserva">
+            Confirmar Reserva
+          </button>
+        </form>
+      </section>
+
+      <!-- SECCIÓN TRIAJE INTELIGENTE IA (GROK) -->
+      <section class="card-section triage-section">
+        <div class="card-section-header">
+          <h4>Triaje Inteligente IA // Novedad Técnica</h4>
+          <span class="ai-badge-pill">GROK-2</span>
+        </div>
+        <form id="form-reportar-incidencia" class="card-triage-form" onsubmit="return false;">
+          <div class="form-group">
+            <label for="incidencia-desc">Describa la novedad o falla técnica:</label>
+            <textarea id="incidencia-desc" rows="2" placeholder="p. ej. Chispas en la toma, sin señal de internet, pantalla parpadea..." required class="form-control"></textarea>
+          </div>
+          <button id="btn-evaluar-triaje" type="submit" class="btn-triage-ai">
+            Evaluar Novedad con IA (Grok)
+          </button>
+        </form>
+      </section>
+
+      <h4>Acciones Rápidas</h4>
       <ul id="menu-actions" class="menu-actions-list">
         <!-- Opciones inyectadas dinámicamente por JavaScript -->
       </ul>
@@ -316,13 +413,13 @@
       <!-- Selector rápido de Módulo dentro del 3D + Botón Salir -->
       <div class="doom-top-controls">
         <button id="btn-3d-switch-module" class="doom-ctrl-btn" type="button" aria-label="Cambiar de módulo espacial en 3D">
-          🔄 Cambiar Sector (Cañaveral / ISS)
+          Cambiar Sector (Cañaveral / ISS)
         </button>
         <button id="btn-3d-call-orbit" class="doom-ctrl-btn orbit-btn" type="button" aria-label="Saludar a la mascota Orbit">
-          👩‍🚀 Saludar a Orbit
+          Saludar a Orbit
         </button>
         <button id="btn-exit-3d" class="doom-exit-btn" type="button" aria-label="Salir del recorrido 3D y volver al plano 2D">
-          ✕ Salir / Volver al Plano
+          X Salir / Volver al Plano
         </button>
       </div>
     </div>
@@ -351,8 +448,8 @@
         </div>
         <p id="doom-tt-desc" class="doom-tt-desc"></p>
         <div class="doom-tt-meta">
-          <span>👥 Capacidad: <strong id="doom-tt-cap">-</strong></span>
-          <span>⚡ Estado: <strong id="doom-tt-status" class="doom-tt-pill">Activo</strong></span>
+          <span>Capacidad: <strong id="doom-tt-cap">-</strong></span>
+          <span>Estado: <strong id="doom-tt-status" class="doom-tt-pill">Activo</strong></span>
         </div>
         <div id="doom-tt-actions" class="doom-tt-actions"></div>
       </aside>

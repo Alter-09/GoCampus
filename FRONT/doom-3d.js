@@ -363,7 +363,7 @@
     // Registrar a Orbit también como punto interactivo accesible
     createHotspotNode({
       id: "orbit-mascot",
-      number: "👩‍🚀",
+      number: "ORBIT",
       label: "Mascota Oficial: ORBIT",
       code: "CL-ORBIT-00",
       capacity: "Guía Espacial",
@@ -520,7 +520,7 @@
   function triggerOrbitSalute(message) {
     orbitGreetingTimer = 2.2;
     hudOrbitSpeech.textContent = `ORBIT: "${message}"`;
-    hudOrbitVisor.innerHTML = `<span class="visor-eyes">★ ★</span><span class="visor-mouth">▀▀▀</span>`;
+    hudOrbitVisor.innerHTML = `<span class="visor-eyes">o o</span><span class="visor-mouth">▀▀▀</span>`;
     setTimeout(() => {
       hudOrbitVisor.innerHTML = `<span class="visor-eyes">^ ^</span><span class="visor-mouth">░░░</span>`;
     }, 2000);

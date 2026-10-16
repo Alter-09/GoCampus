@@ -5,7 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @Builder
@@ -21,6 +23,10 @@ public class ReservaResponseDTO {
     private String usuarioEmail;
     private LocalDateTime fechaInicio;
     private LocalDateTime fechaFin;
+    private LocalDate fechaReserva;
+    private LocalTime horaInicio;
+    private LocalTime horaFin;
+    private LocalTime horaReserva;
     private Integer cantidadPersonas;
     private String estado;
     private String motivo;

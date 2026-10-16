@@ -36,6 +36,11 @@ public class ReservaEspacioController {
         return ResponseEntity.ok(reservaService.cancelarReserva(id, usuarioId));
     }
 
+    @GetMapping
+    public ResponseEntity<List<ReservaResponseDTO>> listarTodas() {
+        return ResponseEntity.ok(reservaService.listarTodas());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ReservaResponseDTO> obtenerPorId(@PathVariable Long id) {
         return ResponseEntity.ok(reservaService.obtenerPorId(id));
@@ -44,6 +49,11 @@ public class ReservaEspacioController {
     @GetMapping("/usuario/{usuarioId}")
     public ResponseEntity<List<ReservaResponseDTO>> listarPorUsuario(@PathVariable Long usuarioId) {
         return ResponseEntity.ok(reservaService.listarPorUsuario(usuarioId));
+    }
+
+    @GetMapping("/espacio/{espacioId}")
+    public ResponseEntity<List<ReservaResponseDTO>> listarPorEspacio(@PathVariable Long espacioId) {
+        return ResponseEntity.ok(reservaService.listarPorEspacio(espacioId));
     }
 
     /**

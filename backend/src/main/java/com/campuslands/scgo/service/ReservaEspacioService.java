@@ -13,7 +13,9 @@ public interface ReservaEspacioService {
     ReservaResponseDTO crearReserva(ReservaRequestDTO dto);
     ReservaResponseDTO cancelarReserva(Long id, Long usuarioId);
     ReservaResponseDTO obtenerPorId(Long id);
+    List<ReservaResponseDTO> listarTodas();
     List<ReservaResponseDTO> listarPorUsuario(Long usuarioId);
+    List<ReservaResponseDTO> listarPorEspacio(Long espacioId);
     List<CalendarioEventoDTO> obtenerCalendarioSemanalUsuario(Long usuarioId, LocalDate fecha);
     List<CalendarioEventoDTO> obtenerCalendarioSemanalEspacio(Long espacioId, LocalDate fecha);
     List<EspacioMinimapaDTO> obtenerOcupacionMinimapa(LocalDateTime fechaHora);
