@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa Interactivo Campuslands - Módulos & Recorrido 3D</title>
+  <!-- Tipografía Oficial Brandbook: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Three.js Vanilla vía CDN para la Sala 3D -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+  <!-- ENCABEZADO Y BOTONES DE LOS 2 MÓDULOS -->
+  <header class="top-bar">
+    <div class="brand">
+      <!-- Isotipo Casco Campuslands en SVG nativo según Brandbook -->
+      <svg class="brand-helmet-icon" viewBox="0 0 64 56" width="36" height="32" aria-hidden="true">
+        <defs>
+          <linearGradient id="campusGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#07102B" />
+            <stop offset="50%" stop-color="#2C67BA" />
+            <stop offset="100%" stop-color="#2CAAFF" />
+          </linearGradient>
+        </defs>
+        <path d="M12 48 C8 34, 12 10, 32 10 C52 10, 56 34, 52 48 Z" fill="none" stroke="url(#campusGrad)" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M18 42 C16 32, 20 18, 32 18 C44 18, 48 32, 46 42 Z" fill="none" stroke="#2CAAFF" stroke-width="2.5"/>
+        <path d="M8 28 C5 28, 5 38, 8 38" fill="none" stroke="#57BBFF" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M56 28 C59 28, 59 38, 56 38" fill="none" stroke="#57BBFF" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-badge">CAMPUSLANDS</span>
+      <h1>Sistema Interactivo de Planos y Sectores</h1>
+    </div>
+
+    <!-- Botones para alternar entre los 2 módulos + CTA Recorrido 3D -->
+    <nav class="module-nav" aria-label="Selector de Módulos y Vista 3D">
+      <button id="btn-mod-canaveral" class="module-btn active" data-module="canaveral">
+        🚀 Módulo 1: Sector Cabo Cañaveral
+      </button>
+      <button id="btn-mod-iss" class="module-btn" data-module="iss">
+        🛰️ Módulo 2: Estación Espacial Internacional
+      </button>
+      <!-- BOTÓN CTA: RECORRIDO 3D -->
+      <button id="btn-start-3d" class="cta-3d-btn" type="button" aria-haspopup="dialog" aria-controls="doom-3d-modal" aria-label="Iniciar Recorrido 3D interactivo del módulo activo con Orbit">
+        <span class="cta-3d-icon" aria-hidden="true">🕹️</span>
+        <span>Recorrido 3D</span>
+        <span class="cta-orbit-tag">ORBIT DOOM</span>
+      </button>
+    </nav>
+
+    <!-- Selector opcional para alternar entre estructura renderizada o foto original -->
+    <div class="view-mode">
+      <label class="toggle-label">
+        <input type="checkbox" id="toggle-real-image">
+        <span>Usar imagen de fondo (`canaveral.jpg` / `iss.jpg`)</span>
+      </label>
+    </div>
+  </header>
+
+  <!-- CONTENEDOR PRINCIPAL (VISTA 2D ORIGINAL) -->
+  <main id="main-workspace" class="workspace">
+
+    <!-- ==========================================
+         MÓDULO 1: SECTOR CABO CAÑAVERAL (9 PUNTOS)
+         ========================================== -->
+    <section id="module-canaveral" class="map-module active">
+      <div class="module-header">
+        <h2>🚀 Sector Cabo Cañaveral</h2>
+        <p>Haz clic en cualquiera de los <strong>9 puntos rojos</strong> del plano (incluyendo la <strong>Sala de Reunión</strong> y las <strong>Salas Destacadas</strong>) para abrir el menú del área.</p>
+      </div>
+
+      <div class="map-stage iss-aspect" id="stage-canaveral">
+        <!-- Imagen real opcional -->
+        <img src="canaveral.jpg" alt="Plano Sector Cabo Cañaveral" class="bg-plan-img" onerror="this.style.display='none'">
+
+        <!-- ESTRUCTURA RENDERIZADA EN SVG DEL PLANO 1 -->
+        <svg class="rendered-blueprint" viewBox="0 0 1280 960" xmlns="http://www.w3.org/2000/svg">
+          <!-- Fondo de placa acrílica -->
+          <rect x="20" y="20" width="1240" height="920" rx="18" fill="#dfe3e6" stroke="#8c969e" stroke-width="4"/>
+
+          <!-- Tornillos metálicos en las 4 esquinas -->
+          <circle cx="65" cy="65" r="18" fill="#555" stroke="#222" stroke-width="3"/>
+          <circle cx="1215" cy="65" r="18" fill="#555" stroke="#222" stroke-width="3"/>
+          <circle cx="65" cy="895" r="18" fill="#555" stroke="#222" stroke-width="3"/>
+          <circle cx="1215" cy="895" r="18" fill="#555" stroke="#222" stroke-width="3"/>
+
+          <!-- Bloque Izquierdo: Ascensores, Escaleras y Baños -->
+          <rect x="65" y="280" width="405" height="300" fill="#cfd5d9" stroke="#3c4245" stroke-width="5"/>
+          <rect x="85" y="300" width="105" height="90" fill="#dcdfe2" stroke="#4f5659" stroke-width="2"/>
+          <rect x="225" y="300" width="110" height="90" fill="#dcdfe2" stroke="#4f5659" stroke-width="2"/>
+          <rect x="350" y="300" width="115" height="95" fill="#dcdfe2" stroke="#3c4245" stroke-width="4"/>
+          <text x="407" y="345" font-size="10" text-anchor="middle" fill="#333">BAÑOS SUP.</text>
+
+          <rect x="65" y="480" width="140" height="95" fill="#dcdfe2" stroke="#3c4245" stroke-width="4"/>
+          <text x="135" y="530" font-size="10" text-anchor="middle" fill="#333">BAÑOS INF. IZQ</text>
+          <rect x="215" y="485" width="125" height="90" fill="#dcdfe2" stroke="#3c4245" stroke-width="3"/>
+          <rect x="345" y="480" width="125" height="95" fill="#dcdfe2" stroke="#3c4245" stroke-width="4"/>
+          <text x="407" y="530" font-size="10" text-anchor="middle" fill="#333">BAÑOS INF. DER</text>
+
+          <!-- NUEVA SALA DESTACADA (ENCERRANDO AL NUMERAL 7 - MISMO TAMAÑO QUE BAÑOS INF. DER: 125x95) -->
+          <rect x="475" y="480" width="125" height="95" fill="#cfd5d9" stroke="#000000" stroke-width="7"/>
+
+          <!-- Domo Semicircular Superior Derecho -->
+          <path d="M 745 305 A 210 210 0 0 1 1165 305 Z" fill="#cfd5d9" stroke="#3c4245" stroke-width="5"/>
+          <line x1="955" y1="95" x2="955" y2="305" stroke="#3c4245" stroke-width="4"/>
+          <text x="850" y="165" font-size="12" fill="#444" text-anchor="middle">ZONA LOUNGE / DOMO</text>
+          <text x="1045" y="210" font-size="12" fill="#444" text-anchor="middle">TERRAZA DER.</text>
+
+          <!-- Cuerpo Central y Derecho (Coworking + Hunters) -->
+          <path d="M 470 305 L 1165 305 L 1165 585 L 985 585 L 985 780 L 880 780 L 880 865 L 335 865 L 335 580 L 470 580 Z"
+                fill="#cfd5d9" stroke="#3c4245" stroke-width="5"/>
+
+          <!-- Mesas Superiores Centrales -->
+          <rect x="485" y="308" width="260" height="85" fill="#d5dbdf" stroke="#3c4245" stroke-width="3"/>
+          <text x="615" y="355" font-size="11" fill="#444" text-anchor="middle">MESAS DE TRABAJO</text>
+
+          <!-- 3 Salas bajo el semicírculo -->
+          <rect x="745" y="308" width="68" height="85" fill="#d5dbdf" stroke="#3c4245" stroke-width="3"/>
+          <rect x="813" y="308" width="65" height="85" fill="#d5dbdf" stroke="#3c4245" stroke-width="3"/>
+          <rect x="878" y="308" width="75" height="85" fill="#d5dbdf" stroke="#000000" stroke-width="7"/>
+
+          <!-- Área HUNTERS a la derecha -->
+          <rect x="1030" y="375" width="85" height="60" fill="none" stroke="#555" stroke-width="2"/>
+          <text x="1072" y="452" font-size="11" fill="#333" text-anchor="middle" font-weight="bold">HUNTERS</text>
+          <rect x="1030" y="465" width="85" height="55" fill="none" stroke="#555" stroke-width="2"/>
+
+          <!-- 2 Cabinas individuales originales sobre Sala de Reunión (Puntos 4 y 5) -->
+          <rect x="870" y="530" width="42" height="45" fill="#d5dbdf" stroke="#3c4245" stroke-width="3"/>
+          <rect x="912" y="530" width="42" height="45" fill="#d5dbdf" stroke="#3c4245" stroke-width="3"/>
+
+          <!-- Sala de Reunión (Derecha Inferior - Punto 6) -->
+          <rect x="870" y="575" width="110" height="200" fill="#d5dbdf" stroke="#3c4245" stroke-width="4"/>
+          <ellipse cx="915" cy="675" rx="16" ry="38" fill="none" stroke="#333" stroke-width="3"/>
+          <text x="920" y="600" font-size="10" fill="#333" text-anchor="middle">SALA DE REUNIÓN</text>
+
+          <!-- 2 Cubículos Verticales (Abajo Centro-Izquierda - Puntos 8 y 9) -->
+          <rect x="515" y="655" width="48" height="55" fill="#d5dbdf" stroke="#3c4245" stroke-width="3"/>
+          <rect x="515" y="710" width="48" height="55" fill="#d5dbdf" stroke="#3c4245" stroke-width="3"/>
+
+          <!-- Islas Hexagonales en el Área Central -->
+          <g fill="none" stroke="#666" stroke-width="2">
+            <circle cx="555" cy="450" r="18"/><circle cx="620" cy="450" r="18"/>
+            <circle cx="685" cy="450" r="18"/><circle cx="750" cy="450" r="18"/><circle cx="815" cy="450" r="18"/>
+            <circle cx="705" cy="545" r="18"/><circle cx="785" cy="545" r="18"/>
+            <circle cx="650" cy="610" r="18"/><circle cx="705" cy="640" r="18"/>
+            <circle cx="785" cy="640" r="18"/><circle cx="825" cy="610" r="18"/>
+            <circle cx="650" cy="715" r="18"/><circle cx="705" cy="755" r="18"/>
+            <circle cx="785" cy="755" r="18"/><circle cx="825" cy="715" r="18"/>
+          </g>
+
+          <!-- Flechas Verdes de Ruta de Evacuación -->
+          <g fill="#2e7d32">
+            <polygon points="295,440 315,432 315,437 328,437 328,443 315,443 315,448"/>
+            <polygon points="355,440 375,432 375,437 388,437 388,443 375,443 375,448"/>
+            <polygon points="480,440 500,432 500,437 513,437 513,443 500,443 500,448"/>
+            <polygon points="585,492 605,484 605,489 618,489 618,495 605,495 605,500"/>
+            <polygon points="650,492 670,484 670,489 683,489 683,495 670,495 670,500"/>
+            <polygon points="750,492 770,484 770,489 783,489 783,495 770,495 770,500"/>
+          </g>
+
+          <!-- Cuadro de CONVENCIONES -->
+          <rect x="1055" y="635" width="145" height="160" fill="#cfd5d9" stroke="#222" stroke-width="3"/>
+          <text x="1127" y="662" font-size="13" font-weight="bold" text-anchor="middle" fill="#111">CONVENCIONES</text>
+          <rect x="1070" y="680" width="22" height="8" fill="#2e7d32"/>
+          <text x="1100" y="688" font-size="9" fill="#222">RUTA DE EVACUACIÓN</text>
+          <rect x="1075" y="708" width="10" height="14" fill="#b71c1c"/>
+          <text x="1100" y="718" font-size="9" fill="#222">EXTINTORES</text>
+          <rect x="1072" y="738" width="16" height="10" fill="#2e7d32"/>
+          <text x="1100" y="747" font-size="9" fill="#222">SALIDA EMERGENCIA</text>
+          <rect x="1072" y="766" width="16" height="12" fill="#1b5e20"/>
+          <text x="1100" y="776" font-size="9" fill="#222">BOTIQUÍN</text>
+        </svg>
+
+        <!-- CAPA DE BOTONES INTERACTIVOS (HOTSPOTS) - SECTOR CABO CAÑAVERAL -->
+        <div class="hotspots-layer" id="hotspots-canaveral"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         MÓDULO 2: ESTACIÓN ESPACIAL INTERNACIONAL (4 PUNTOS)
+         ========================================== -->
+    <section id="module-iss" class="map-module">
+      <div class="module-header">
+        <h2>🛰️ Estación Espacial Internacional — Plano de Evacuación Campuslands</h2>
+        <p>Haz clic en cualquiera de los <strong>4 puntos rojos</strong> de los salones para desplegar su menú.</p>
+      </div>
+
+      <div class="map-stage canaveral-aspect" id="stage-iss">
+        <!-- Imagen real opcional -->
+        <img src="iss.jpg" alt="Plano Estación Espacial Internacional" class="bg-plan-img" onerror="this.style.display='none'">
+
+        <!-- ESTRUCTURA RENDERIZADA EN SVG DEL PLANO 2 -->
+        <svg class="rendered-blueprint" viewBox="0 0 1600 560" xmlns="http://www.w3.org/2000/svg">
+          <!-- Placa de fondo -->
+          <rect x="10" y="10" width="1580" height="540" rx="16" fill="#d8d6d2" stroke="#8c8984" stroke-width="4"/>
+
+          <!-- Tornillos en las 4 esquinas -->
+          <circle cx="70" cy="48" r="24" fill="#8f8c86" stroke="#555" stroke-width="3"/>
+          <circle cx="1520" cy="55" r="24" fill="#8f8c86" stroke="#555" stroke-width="3"/>
+          <circle cx="68" cy="505" r="24" fill="#8f8c86" stroke="#555" stroke-width="3"/>
+          <circle cx="1520" y="500" r="24" fill="#8f8c86" stroke="#555" stroke-width="3"/>
+
+          <!-- Título del Plano -->
+          <text x="365" y="38" font-size="28" font-weight="bold" text-anchor="middle" fill="#222">PLANO DE EVACUACIÓN</text>
+          <text x="365" y="74" font-size="28" font-weight="bold" text-anchor="middle" fill="#222">CAMPUSLANDS</text>
+
+          <!-- Contorno General Izquierdo (4 Salones) -->
+          <rect x="20" y="105" width="715" height="385" fill="#ceccc8" stroke="#4a4845" stroke-width="6"/>
+
+          <!-- División salón superior izquierdo (Salón 3) -->
+          <path d="M 20 105 L 355 105 L 355 235 L 300 298 L 20 298 Z" fill="#d5d3cf" stroke="#4a4845" stroke-width="4"/>
+          <text x="180" y="290" font-size="11" fill="#555" text-anchor="middle">Salón 3 CAMPUS</text>
+
+          <!-- División salón superior derecho (Salón 2) -->
+          <path d="M 355 105 L 675 105 L 675 245 L 625 298 L 395 298 L 355 235 Z" fill="#d5d3cf" stroke="#4a4845" stroke-width="4"/>
+          <text x="510" y="122" font-size="11" fill="#555" text-anchor="middle">Salón 2 CAMPUS</text>
+
+          <!-- División salón inferior izquierdo (Salón 4) -->
+          <path d="M 20 298 L 300 298 L 348 365 L 348 490 L 20 490 Z" fill="#d5d3cf" stroke="#4a4845" stroke-width="4"/>
+          <text x="180" y="314" font-size="11" fill="#555" text-anchor="middle">Salón 4 CAMPUS</text>
+
+          <!-- División salón inferior derecho (Salón 1) -->
+          <rect x="430" y="365" width="305" height="125" fill="#d5d3cf" stroke="#4a4845" stroke-width="4"/>
+          <line x1="430" y1="365" x2="732" y2="365" stroke="#000" stroke-width="6"/>
+          <line x1="430" y1="363" x2="430" y2="385" stroke="#8b0000" stroke-width="5"/>
+          <text x="560" y="482" font-size="11" fill="#555" text-anchor="middle">Salón 1 CAMPUS</text>
+
+          <!-- Bloque Derecho (Ascensores, Escaleras y Baños) -->
+          <rect x="735" y="105" width="585" height="385" fill="#ceccc8" stroke="#4a4845" stroke-width="5"/>
+          <rect x="760" y="110" width="155" height="120" fill="#d8d6d2" stroke="#555" stroke-width="2"/>
+          <rect x="940" y="110" width="165" height="120" fill="#d8d6d2" stroke="#555" stroke-width="2"/>
+          <rect x="1125" y="105" width="190" height="125" fill="#d8d6d2" stroke="#4a4845" stroke-width="4"/>
+          <text x="1220" y="170" font-size="12" fill="#444" text-anchor="middle">ÁREA BAÑOS SUP.</text>
+
+          <rect x="735" y="365" width="195" height="125" fill="#d8d6d2" stroke="#4a4845" stroke-width="4"/>
+          <text x="832" y="435" font-size="12" fill="#444" text-anchor="middle">ÁREA BAÑOS INF. IZQ</text>
+          <rect x="930" y="365" width="195" height="125" fill="#d8d6d2" stroke="#4a4845" stroke-width="4"/>
+          <text x="1027" y="435" font-size="12" fill="#444" text-anchor="middle">ESCALERAS EMERGENCIA</text>
+          <rect x="1125" y="365" width="195" height="125" fill="#d8d6d2" stroke="#4a4845" stroke-width="4"/>
+          <text x="1220" y="435" font-size="12" fill="#444" text-anchor="middle">ÁREA BAÑOS INF. DER</text>
+
+          <!-- Flechas Verdes en Pasillo Central -->
+          <g fill="#388e3c">
+            <polygon points="340,330 320,322 320,327 305,327 305,333 320,333 320,338"/>
+            <polygon points="415,330 395,322 395,327 380,327 380,333 395,333 395,338"/>
+            <polygon points="500,330 480,322 480,327 465,327 465,333 480,333 480,338"/>
+            <polygon points="585,330 565,322 565,327 550,327 550,333 565,333 565,338"/>
+            <polygon points="668,330 648,322 648,327 633,327 633,333 648,333 648,338"/>
+            <polygon points="765,292 745,284 745,289 730,289 730,295 745,295 745,300"/>
+            <polygon points="885,292 865,284 865,289 850,289 850,295 865,295 865,300"/>
+          </g>
+
+          <!-- Cuadro de CONVENCIONES a la derecha -->
+          <rect x="1350" y="190" width="230" height="230" fill="#d5d3cf" stroke="#2b2927" stroke-width="4"/>
+          <text x="1465" y="225" font-size="17" font-weight="bold" text-anchor="middle" fill="#222">CONVENCIONES</text>
+          <polygon points="1415,262 1388,250 1388,257 1365,257 1365,267 1388,267 1388,274" fill="#388e3c"/>
+          <text x="1432" y="266" font-size="12" fill="#222">RUTA DE EVACUACIÓN</text>
+          <rect x="1382" y="292" width="14" height="22" fill="#b71c1c"/>
+          <text x="1432" y="308" font-size="12" fill="#222">EXTINTORES</text>
+          <rect x="1372" y="334" width="32" height="18" fill="#388e3c"/>
+          <text x="1432" y="347" font-size="12" fill="#222">SALIDA EMERGENCIA</text>
+          <rect x="1374" y="370" width="28" height="20" fill="#2e7d32"/>
+          <text x="1432" y="384" font-size="12" fill="#222">BOTIQUÍN</text>
+        </svg>
+
+        <!-- CAPA DE BOTONES INTERACTIVOS (HOTSPOTS) - ESTACIÓN ESPACIAL INTERNACIONAL -->
+        <div class="hotspots-layer" id="hotspots-iss"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         MENÚ LATERAL / MODAL DE ACCESO AL DAR CLIC
+         ========================================== -->
+    <aside id="context-menu" class="context-menu hidden" aria-live="polite">
+      <div class="menu-header">
+        <div>
+          <span id="menu-module-tag" class="menu-tag">MÓDULO</span>
+          <h3 id="menu-title">Selecciona un punto rojo</h3>
+        </div>
+        <button id="btn-close-menu" class="close-btn" title="Cerrar menú" aria-label="Cerrar menú contextual">&times;</button>
+      </div>
+
+      <p id="menu-description" class="menu-desc"></p>
+
+      <div class="menu-meta">
+        <div><strong>Código:</strong> <span id="menu-code">-</span></div>
+        <div><strong>Capacidad:</strong> <span id="menu-capacity">-</span></div>
+        <div><strong>Estado:</strong> <span id="menu-status" class="status-pill">Disponible</span></div>
+      </div>
+
+      <h4>Acciones del Menú</h4>
+      <ul id="menu-actions" class="menu-actions-list">
+        <!-- Opciones inyectadas dinámicamente por JavaScript -->
+      </ul>
+
+      <div id="action-feedback" class="action-feedback hidden"></div>
+    </aside>
+
+  </main>
+
+  <!-- =========================================================
+       CONTENEDOR FULL-SCREEN: SALA 3D ESTILO DOOM (CAMPUSLANDS)
+       ========================================================= -->
+  <section id="doom-3d-modal" class="doom-3d-container hidden" role="dialog" aria-modal="true" aria-labelledby="doom-hud-title" aria-hidden="true">
+    
+    <!-- Barra Superior del Visor 3D -->
+    <div class="doom-top-bar">
+      <div class="doom-brand-info">
+        <span class="doom-badge">DOOM ENGINE // ORBIT v1.0</span>
+        <h2 id="doom-hud-title">Sector Cabo Cañaveral — Exploración 3D</h2>
+      </div>
+
+      <!-- Selector rápido de Módulo dentro del 3D + Botón Salir -->
+      <div class="doom-top-controls">
+        <button id="btn-3d-switch-module" class="doom-ctrl-btn" type="button" aria-label="Cambiar de módulo espacial en 3D">
+          🔄 Cambiar Sector (Cañaveral / ISS)
+        </button>
+        <button id="btn-3d-call-orbit" class="doom-ctrl-btn orbit-btn" type="button" aria-label="Saludar a la mascota Orbit">
+          👩‍🚀 Saludar a Orbit
+        </button>
+        <button id="btn-exit-3d" class="doom-exit-btn" type="button" aria-label="Salir del recorrido 3D y volver al plano 2D">
+          ✕ Salir / Volver al Plano
+        </button>
+      </div>
+    </div>
+
+    <!-- Lienzo WebGL y Capa de Hotspots 3D Accesibles por Teclado -->
+    <div id="doom-viewport" class="doom-viewport">
+      <canvas id="doom-canvas" aria-hidden="true" tabindex="-1"></canvas>
+      <div id="doom-crosshair" class="doom-crosshair" aria-hidden="true">+</div>
+
+      <!-- Instrucción de Pointer Lock -->
+      <div id="doom-lock-prompt" class="doom-lock-prompt">
+        <p><strong>CLIC EN LA ESCENA</strong> para capturar el ratón (Mirar 360°) • <strong>WASD / Flechas</strong> para caminar • <strong>ESC</strong> para liberar cursor • <strong>TAB / ENTER</strong> para navegar Hotspots</p>
+      </div>
+
+      <!-- Capa de Botones Hotspots 3D -->
+      <div id="doom-hotspots-overlay" class="doom-hotspots-overlay" role="region" aria-label="Puntos de interés interactivos en la sala 3D"></div>
+
+      <!-- Tooltip / Panel Flotante 3D de Hotspot u Orbit -->
+      <aside id="doom-tooltip" class="doom-tooltip hidden" role="status" aria-live="polite">
+        <div class="doom-tooltip-header">
+          <div>
+            <span id="doom-tt-code" class="doom-tt-code">CC-DOMO-01</span>
+            <h3 id="doom-tt-title">Domo Circular</h3>
+          </div>
+          <button id="doom-tt-close" class="doom-tt-close" type="button" aria-label="Cerrar información del punto">&times;</button>
+        </div>
+        <p id="doom-tt-desc" class="doom-tt-desc"></p>
+        <div class="doom-tt-meta">
+          <span>👥 Capacidad: <strong id="doom-tt-cap">-</strong></span>
+          <span>⚡ Estado: <strong id="doom-tt-status" class="doom-tt-pill">Activo</strong></span>
+        </div>
+        <div id="doom-tt-actions" class="doom-tt-actions"></div>
+      </aside>
+    </div>
+
+    <!-- HUD Inferior Clásico Estilo DOOM93 -->
+    <footer class="doom-status-hud" aria-label="Estado del explorador Campuslands">
+      <div class="hud-block">
+        <span class="hud-label">VELOCIDAD</span>
+        <span id="hud-speed" class="hud-value">100%</span>
+      </div>
+      <div class="hud-block">
+        <span class="hud-label">SECTOR ACTIVO</span>
+        <span id="hud-sector-code" class="hud-value hud-cyan">CAÑAVERAL</span>
+      </div>
+      <div class="hud-block hud-face-box" title="Mascota Oficial: Orbit">
+        <div id="hud-orbit-visor" class="hud-orbit-visor" aria-hidden="true">
+          <span class="visor-eyes">^ ^</span>
+          <span class="visor-mouth">░░░</span>
+        </div>
+        <span id="hud-orbit-speech" class="hud-sublabel">ORBIT: "¡Listo, Camper!"</span>
+      </div>
+      <div class="hud-block">
+        <span class="hud-label">HOTSPOTS</span>
+        <span id="hud-hotspots-count" class="hud-value hud-aqua">9 ACTIVOS</span>
+      </div>
+      <div class="hud-block">
+        <span class="hud-label">MODO MOVIMIENTO</span>
+        <span id="hud-motion-mode" class="hud-value">DOOM FPS</span>
+      </div>
+    </footer>
+
+  </section>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+  <script src="doom-3d.js"></script>
+</body>
+</html>
