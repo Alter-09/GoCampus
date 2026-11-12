@@ -1,3 +1,32 @@
+<div align="center">
+
+# 🏫 GoCampus
+### Sistema Central de Gestión Operativa (SCGO)
+
+**Plataforma web para coordinar espacios, recursos tecnológicos, incidencias y orientación dentro del campus.**
+
+![Java](https://img.shields.io/badge/Java-21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.x-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Three.js](https://img.shields.io/badge/3D-Three.js-000000?style=for-the-badge&logo=threedotjs)
+
+</div>
+
+## Project at a glance
+
+GoCampus centraliza operaciones de campus mediante módulos de reserva de espacios, préstamo de periféricos, triaje de incidencias asistido por IA y visualización espacial 2D/3D.
+
+| Módulo | Capacidades descritas |
+|---|---|
+| Espacios | Reservas, aforos, horarios y calendario |
+| Recursos | Inventario y préstamos de periféricos |
+| Incidencias | Clasificación, prioridad y asistencia de IA con fallback |
+| Orientación | Minimapa 2D y recorrido 3D |
+
+**Navegación:** [Descripción](#descripcion-general) · [Características](#caracteristicas-principales) · [Arquitectura](#arquitectura-del-sistema) · [Instalación](#instalacion-y-configuracion)
+
+---
+
 # GoCampus - Sistema Central de Gestion Operativa (SCGO)
 
 Sistema Central de Gestion Operativa web para la gestion integral de campus educativos y tecnologicos (Campuslands). La plataforma permite la reserva de espacios fisicos respetando aforos y duraciones maximas, el control y prestamo exclusivo de perifericos tecnologicos, la visualizacion interactiva en minimapa 2D y exploracion 3D, y un modulo de triaje inteligente de incidencias asistido por Inteligencia Artificial (Grok-2 / xAI) con mecanismo de contingencia heuristica deterministica.
